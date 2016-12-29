@@ -1,0 +1,31 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "QJ9QKDYACz1ZjOUP5hE0GpS98O0=",
+			"path": "github.com/subchen/gstack/cli",
+			"revision": "78bb902d6cd6ada1170562aaab9381058952a67f",
+			"revisionTime": "2016-12-10T03:04:20Z"
+		},
+		{
+			"checksumSHA1": "Z5vW07Z7fguDVrJXW3wgYsLt5ZI=",
+			"path": "github.com/subchen/gstack/conv",
+			"revision": "78bb902d6cd6ada1170562aaab9381058952a67f",
+			"revisionTime": "2016-12-10T03:04:20Z"
+		},
+		{
+			"checksumSHA1": "BuSbNNI4mfmG1BxzfX4PgNM32Gs=",
+			"path": "github.com/subchen/gstack/stringutil",
+			"revision": "78bb902d6cd6ada1170562aaab9381058952a67f",
+			"revisionTime": "2016-12-10T03:04:20Z"
+		},
+		{
+			"checksumSHA1": "spJ1eXh+9C2lgTjm7ErpjQ8PaXw=",
+			"path": "github.com/ttacon/chalk",
+			"revision": "22c06c80ed312dcb6e1cf394f9634aa2c4676e22",
+			"revisionTime": "2016-06-26T20:24:18Z"
+		}
+	],
+	"rootPath": "github.com/subchen/multi-tailf"
+}
