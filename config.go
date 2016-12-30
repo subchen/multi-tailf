@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -108,8 +107,9 @@ func (f *ServerFile) MakeCommand() *Command {
 
 	if f.host == "localhost" {
 		return &Command{
-			prompts: prompts,
-			cmd:     exec.Command("tail", "-f", f.file),
+			prompts:           prompts,
+			command:           "tail",
+			commandParameters: []string{"-f", f.file},
 		}
 	}
 
@@ -131,7 +131,8 @@ func (f *ServerFile) MakeCommand() *Command {
 	parameters = append(parameters, "tail -f "+f.file)
 
 	return &Command{
-		prompts: prompts,
-		cmd:     exec.Command(command, parameters...),
+		prompts:           prompts,
+		command:           command,
+		commandParameters: parameters,
 	}
 }
