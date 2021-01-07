@@ -7,7 +7,7 @@ LDFLAGS := $(LDFLAGS) -X 'main.BuildVersion=$(shell git rev-list HEAD --count)'
 LDFLAGS := $(LDFLAGS) -X 'main.BuildGitCommit=$(shell git describe --abbrev=0 --always)'
 LDFLAGS := $(LDFLAGS) -X 'main.BuildDate=$(shell date -u -R)'
 
-GOPATH := $(BASEPATH)/../../../../
+#GOPATH := $(BASEPATH)/../../../../
 
 clean:
 	rm -rf ./bin $(BASENAME)
