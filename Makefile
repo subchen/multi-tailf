@@ -4,10 +4,12 @@ VERSION  := 1.0.0
 
 LDFLAGS := -s -w
 LDFLAGS := $(LDFLAGS) -X 'main.BuildVersion=$(shell git rev-list HEAD --count)'
-LDFLAGS := $(LDFLAGS) -X 'main.BuildGitCommit=$(shell git describe --abbrev=0 --always)'
 LDFLAGS := $(LDFLAGS) -X 'main.BuildDate=$(shell date -u -R)'
+LDFLAGS := $(LDFLAGS) -X 'main.BuildGitBranch=$(shell git branch --show-current)'
+LDFLAGS := $(LDFLAGS) -X 'main.BuildGitCommit=$(shell git describe --abbrev=0 --always)'
+LDFLAGS := $(LDFLAGS) -X 'main.BuildGitRevCount=$(shell git rev-list --all --count $(shell git branch --show-current))'
 
-GOPATH := $(BASEPATH)/../../../../
+#GOPATH := $(BASEPATH)/../../../../
 
 clean:
 	rm -rf ./bin $(BASENAME)

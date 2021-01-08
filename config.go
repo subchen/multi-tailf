@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/subchen/gstack/stringutil"
+	"github.com/subchen/go-stack/ss"
 	"github.com/ttacon/chalk"
 )
 
@@ -58,8 +58,8 @@ func (c *Config) init() {
 
 	// set prompts for each serverfile
 	for _, f := range c.serverFileList {
-		f.promptsHost = stringutil.RightPad(f.promptsHost, " ", maxHostLen)
-		f.promptsFile = stringutil.RightPad(f.promptsFile, " ", maxFileLen)
+		f.promptsHost = ss.PadRight(f.promptsHost, maxHostLen, " ")
+		f.promptsFile = ss.PadRight(f.promptsFile, maxFileLen, " ")
 	}
 }
 

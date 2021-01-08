@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
-	"runtime"
-
-	"github.com/subchen/gstack/cli"
+	"github.com/subchen/go-cli"
 	"github.com/ttacon/chalk"
+	"os"
 )
 
 const (
@@ -13,11 +12,13 @@ const (
 )
 
 var (
-	BuildVersion   string
-	BuildGitCommit string
-	BuildDate      string
+	BuildVersion     string
+	BuildDate        string
+	BuildGitBranch   string
+	BuildGitCommit   string
+	BuildGitRevCount string
 
-	APP_LOGO = chalk.Magenta.Color(`
+	AppLogo = chalk.Magenta.Color(`
     ###    ### ########  #####  ## ##      #######
     ####  ####    ##    ##   ## ## ##      ##
     ## #### ##    ##    ####### ## ##      #####
@@ -27,56 +28,59 @@ var (
 )
 
 func main() {
-	app := cli.NewApp("mtailf", "mtailf is equivalent of tail -f on multiple local or remote files at once")
+	app := cli.NewApp()
+	app.Name = "mtailf"
+	app.Version = VERSION
+	app.Usage = "mtailf is equivalent of tail -f on multiple local or remote files at once"
+	app.UsageText = "Usage: mtailf [OPTIONS] [ /path/file | user:pass@host:file ] ...\n" +
+		"   or: mtailf [ --version | --help ]"
+	app.Flags = []*cli.Flag{
+		{
+			Name:  "--ssh-pass",
+			Usage: "default password for ssh",
+		},
+		{
+			Name:  "--ssh-key",
+			Usage: "default key file for ssh",
+		},
+		{
+			Name:        "--ssh-file",
+			Usage:       "default file for ssh tail",
+			Placeholder: "~/.ssh/id_rsa",
+		},
+	}
+	app.Examples = "* Local files\n" +
+		"    mtailf /var/log/messages-1 /var/log/messages-2\n" +
+		"* Multiple files on servers\n" +
+		"    mtailf root@10.0.0.1 root@10.0.0.2 --ssh-pass=password --ssh-file=/var/log/messages\n" +
+		"* Use SSH private key\n" +
+		"    mtailf root@10.0.0.1:/var/log/messages --ssh-key=/tmp/ssh.key\n" +
+		"* Use SSH passwords\n" +
+		"    mtailf root:p1@10.0.0.1:/var/log/messages root:p2@10.0.0.2:/var/log/messages\n" +
+		"* Use SSH port\n" +
+		"    mtailf root@10.0.0.1:8022:/var/log/messages"
 
-	app.Flag("--ssh-pass", "default password for ssh")
-	app.Flag("--ssh-key", "default key file for ssh").Default("~/.ssh/id_rsa")
-	app.Flag("--ssh-file", "default file for ssh tail")
-	app.AllowArgumentCount(1, -1)
-
-	if BuildVersion == "" {
-		app.Version = VERSION
-	} else {
-		app.Version = func() {
-			fmt.Printf("Version: %s-%s\n", VERSION, BuildVersion)
-			fmt.Printf("Go version: %s\n", runtime.Version())
-			fmt.Printf("Git commit: %s\n", BuildGitCommit)
-			fmt.Printf("Built: %s\n", BuildDate)
-			fmt.Printf("OS/Arch: %s-%s\n", runtime.GOOS, runtime.GOARCH)
+	if BuildVersion != "" {
+		app.BuildInfo = &cli.BuildInfo{
+			Timestamp:   BuildDate,
+			GitBranch:   BuildGitBranch,
+			GitCommit:   BuildGitCommit,
+			GitRevCount: BuildGitRevCount,
 		}
 	}
 
-	app.Usage = func() {
-		fmt.Println("Usage: mtailf [OPTIONS] [ /path/file | user:pass@host:file ] ...")
-		fmt.Println("   or: mtailf [ --version | --help ]")
-	}
+	app.Action = executeApp
 
-	app.MoreHelp = func() {
-		fmt.Println("Examples:")
-		fmt.Println("* Local files")
-		fmt.Println("    mtailf /var/log/messages-1 /var/log/messages-2")
-		fmt.Println("* Multiple files on servers")
-		fmt.Println("    mtailf root@10.0.0.1 root@10.0.0.2 --ssh-pass=password --ssh-file=/var/log/messages")
-		fmt.Println("* Use SSH private key")
-		fmt.Println("    mtailf root@10.0.0.1:/var/log/messages --ssh-key=/tmp/ssh.key")
-		fmt.Println("* Use SSH passwords")
-		fmt.Println("    mtailf root:p1@10.0.0.1:/var/log/messages root:p2@10.0.0.2:/var/log/messages")
-		fmt.Println("* Use SSH port")
-		fmt.Println("    mtailf root@10.0.0.1:8022:/var/log/messages")
-	}
-
-	app.Execute = executeApp
-
-	app.Run()
+	app.Run(os.Args)
 }
 
 func executeApp(ctx *cli.Context) {
-	fmt.Println(APP_LOGO)
+	fmt.Println(AppLogo)
 
 	cfg := Config{
-		SshPass: ctx.String("--ssh-pass"),
-		SshKey:  ctx.String("--ssh-key"),
-		SshFile: ctx.String("--ssh-file"),
+		SshPass: ctx.GetString("--ssh-pass"),
+		SshKey:  ctx.GetString("--ssh-key"),
+		SshFile: ctx.GetString("--ssh-file"),
 		UrlList: ctx.Args(),
 	}
 

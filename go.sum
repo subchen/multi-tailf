@@ -1,0 +1,10 @@
+github.com/subchen/go-cli v2.0.3+incompatible h1:tYs2M2yt24nbNaGMeeSiTkajAen0vALVualScLJ5Qdc=
+github.com/subchen/go-cli v2.0.3+incompatible/go.mod h1:XgWUJcEvZzeSp62+RgNZe61w19G/xIBVuQY9u2qpXmk=
+github.com/subchen/go-stack v1.0.1 h1:RxjXbPrLJbbhnqeW+2HlrfYgJubvhJP0ZheZXBkUkZg=
+github.com/subchen/go-stack v1.0.1/go.mod h1:3cT/CaPsREcrfdDISX4scDVSguZsBDKPuPBYpwiCOLk=
+github.com/ttacon/chalk v0.0.0-20160626202418-22c06c80ed31 h1:OXcKh35JaYsGMRzpvFkLv/MEyPuL49CThT1pZ8aSml4=
+github.com/ttacon/chalk v0.0.0-20160626202418-22c06c80ed31/go.mod h1:onvgF043R+lC5RZ8IT9rBXDaEDnpnw/Cl+HFiw+v/7Q=
+golang.org/x/text v0.3.2/go.mod h1:bEr9sfX3Q8Zfm5fL9x+3itogRgK3+ptLWKqgva+5dAk=
+golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v2 v2.3.0/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
